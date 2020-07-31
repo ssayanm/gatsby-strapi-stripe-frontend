@@ -5,6 +5,17 @@ module.exports = {
     author: `@gatsbyjs`,
   },
   plugins: [
+    {
+      resolve: `gatsby-source-strapi`,
+      options: {
+        apiURL: `http://localhost:1337`,
+        queryLimit: 10000, // Default to 100
+        contentTypes: [`products`],
+        //If using single types place them in this array.
+        // singleTypes: [`home-page`, `contact`],
+        // Possibility to login with a strapi user, when content types are not publically available (optional).
+      },
+    },
     `gatsby-plugin-react-helmet`,
     {
       resolve: `gatsby-source-filesystem`,

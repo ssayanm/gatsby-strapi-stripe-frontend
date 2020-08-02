@@ -13,7 +13,7 @@ const IndexPage = ({ data }) => (
     <SEO title="Home" />
     {data.allStrapiProducts.nodes.map(product => {
       return (
-        <Link to={fromProductSlugToUrl(product.slug)}>
+        <Link to={`/products/${product.slug}`} key={product.id}>
           <div key={product.id} className="home">
             <div>
               <Image
@@ -33,7 +33,7 @@ const IndexPage = ({ data }) => (
 
 export default IndexPage
 
-export const pageQuery = graphql`
+export const query = graphql`
   query MyQuery {
     allStrapiProducts {
       nodes {

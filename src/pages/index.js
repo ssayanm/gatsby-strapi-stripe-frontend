@@ -6,8 +6,6 @@ import Image from "gatsby-image"
 import SEO from "../components/seo"
 import "../style.css"
 
-import { fromProductSlugToUrl } from "../utils/products"
-
 const IndexPage = ({ data }) => (
   <Layout>
     <SEO title="Home" />

@@ -14,7 +14,7 @@ export const getCart = () => {
   return []
 }
 
-export const addToCart = product => {
+export const addToCart = (product, qty = 1) => {
   const cart = getCart()
 
   //if the product is already there
@@ -24,10 +24,15 @@ export const addToCart = product => {
 
   if (indexOfProduct !== -1) {
     //update the quantity
-    cart[indexOfProduct].qty += 1
+    cart[indexOfProduct].qty += parseInt(qty)
+
+    if (cart[indexOfProduct].qty === 0) {
+      //remove product from cart
+      cart.splice(indexOfProduct, 1)
+    }
   } else {
     //set qty 1
-    product.qty = 1
+    product.qty = parseInt(qty)
 
     //push the product
     cart.push(product)

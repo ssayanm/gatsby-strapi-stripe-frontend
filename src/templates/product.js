@@ -1,10 +1,12 @@
-import React from "react"
+import React, { useState } from "react"
 import Layout from "../components/layout"
 import { graphql } from "gatsby"
 import Image from "gatsby-image"
 import { addToCart } from "../utils/cart"
 
 const ProductTemplate = ({ data }) => {
+  const [qty, setQty] = useState(1)
+
   return (
     <Layout>
       <h2>{data.strapiProducts.name}</h2>
@@ -13,7 +15,12 @@ const ProductTemplate = ({ data }) => {
         fluid={data.strapiProducts.thumbnail.childImageSharp.fluid}
         className="home-img"
       />
-      <button onClick={() => addToCart(data.strapiProducts)}>
+      <input
+        type="number"
+        value={qty}
+        onChange={event => setQty(event.target.value)}
+      />
+      <button onClick={() => addToCart(data.strapiProducts, qty)}>
         Add to Cart
       </button>
     </Layout>

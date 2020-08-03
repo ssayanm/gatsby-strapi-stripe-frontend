@@ -1,5 +1,5 @@
 import React from "react"
-import { getCart } from "../utils/cart"
+import { getCart, addToCart } from "../utils/cart"
 import Layout from "../components/layout"
 import Image from "gatsby-image"
 
@@ -17,7 +17,9 @@ const cart = () => {
             />
             <h3>{product.name}</h3>
             <p>${product.price}</p>
+            <span onClick={() => addToCart(product, -1)}>-</span>
             <p>{product.qty}</p>
+            <span onClick={() => addToCart(product, 1)}>+</span>
           </div>
         ))}
       </div>

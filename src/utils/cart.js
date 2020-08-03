@@ -16,6 +16,22 @@ export const getCart = () => {
 
 export const addToCart = product => {
   const cart = getCart()
-  cart.push(product)
+
+  //if the product is already there
+  const indexOfProduct = cart.findIndex(
+    alreadyInCart => alreadyInCart.strapiId === product.strapiId
+  )
+
+  if (indexOfProduct !== -1) {
+    //update the quantity
+    cart[indexOfProduct].qty += 1
+  } else {
+    //set qty 1
+    product.qty = 1
+
+    //push the product
+    cart.push(product)
+  }
+
   setCart(cart)
 }

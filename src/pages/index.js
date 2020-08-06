@@ -1,61 +1,49 @@
 import React from "react"
-
-import {graphql, Link} from 'gatsby'
-import Img from 'gatsby-image'
+import { Link, graphql } from "gatsby"
 
 import Layout from "../components/layout"
+import Image from "gatsby-image"
 import SEO from "../components/seo"
+import "../style.css"
 
-import {formatPrice} from '../utils/format'
-import {fromProductSlugToUrl} from '../utils/products'
-
-const IndexPage = ({data}) => (
+const IndexPage = ({ data }) => (
   <Layout>
     <SEO title="Home" />
-    <h2>Shop</h2>
-    <div style={{
-      display: 'grid',
-      gridTemplateColumns: 'repeat(3, 1fr)',
-      gridGap: '20px'
-    }}>
-      {data.allStrapiProduct.nodes.map(product => (
-        <Link
-          style={{
-            color: '#000000',
-            textDecoration: 'none'
-          }}
-          to={fromProductSlugToUrl(product.slug)}
-        >
-          <div>
+    {data.allStrapiProducts.nodes.map(product => {
+      return (
+        <Link to={`/products/${product.slug}`} key={product.id}>
+          <div key={product.id} className="home">
             <div>
-              <Img fixed={product.thumbnail.childImageSharp.fixed} />
+              <Image
+                fluid={product.thumbnail.childImageSharp.fluid}
+                className="home-img"
+              />
+              <p>
+                {product.name} | ${product.price}
+              </p>
             </div>
-            <h3 style={{marginBottom: 0}}>{product.name}</h3>
-            {formatPrice(product.price_in_cent)}
           </div>
         </Link>
-      ))}
-    </div>
+      )
+    })}
   </Layout>
 )
 
 export default IndexPage
 
-export const pageQuery = graphql`
+export const query = graphql`
   query MyQuery {
-    allStrapiProduct {
+    allStrapiProducts {
       nodes {
         id
-        description
-        created_at
+        content
         name
-        price_in_cent
-        strapiId
+        price
         slug
         thumbnail {
           childImageSharp {
-            fixed(width: 200, height: 200) {
-              ...GatsbyImageSharpFixed
+            fluid {
+              ...GatsbyImageSharpFluid
             }
           }
         }

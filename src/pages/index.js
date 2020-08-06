@@ -1,49 +1,61 @@
 import React from "react"
-import { Link, graphql } from "gatsby"
+
+import {graphql, Link} from 'gatsby'
+import Img from 'gatsby-image'
 
 import Layout from "../components/layout"
-import Image from "gatsby-image"
 import SEO from "../components/seo"
-import "../style.css"
 
-const IndexPage = ({ data }) => (
+import {formatPrice} from '../utils/format'
+import {fromProductSlugToUrl} from '../utils/products'
+
+const IndexPage = ({data}) => (
   <Layout>
     <SEO title="Home" />
-    {data.allStrapiProducts.nodes.map(product => {
-      return (
-        <Link to={`/products/${product.slug}`} key={product.id}>
-          <div key={product.id} className="home">
+    <h2>Shop</h2>
+    <div style={{
+      display: 'grid',
+      gridTemplateColumns: 'repeat(3, 1fr)',
+      gridGap: '20px'
+    }}>
+      {data.allStrapiProduct.nodes.map(product => (
+        <Link
+          style={{
+            color: '#000000',
+            textDecoration: 'none'
+          }}
+          to={fromProductSlugToUrl(product.slug)}
+        >
+          <div>
             <div>
-              <Image
-                fluid={product.thumbnail.childImageSharp.fluid}
-                className="home-img"
-              />
-              <p>
-                {product.name} | ${product.price}
-              </p>
+              <Img fixed={product.thumbnail.childImageSharp.fixed} />
             </div>
+            <h3 style={{marginBottom: 0}}>{product.name}</h3>
+            {formatPrice(product.price_in_cent)}
           </div>
         </Link>
-      )
-    })}
+      ))}
+    </div>
   </Layout>
 )
 
 export default IndexPage
 
-export const query = graphql`
+export const pageQuery = graphql`
   query MyQuery {
-    allStrapiProducts {
+    allStrapiProduct {
       nodes {
         id
-        content
+        description
+        created_at
         name
-        price
+        price_in_cent
+        strapiId
         slug
         thumbnail {
           childImageSharp {
-            fluid {
-              ...GatsbyImageSharpFluid
+            fixed(width: 200, height: 200) {
+              ...GatsbyImageSharpFixed
             }
           }
         }

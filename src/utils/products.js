@@ -1,4 +1,4 @@
-// given a product slug, return to a single product page
-export const fromProductSlugToUrl = slug => {
-  return `products/${slug}`
-}
+/**
+ * Given a product slug, return the relative path to single product page
+ */
+export const fromProductSlugToUrl = (slug) => `/products/${slug}`

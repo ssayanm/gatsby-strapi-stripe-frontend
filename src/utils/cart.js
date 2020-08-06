@@ -1,42 +1,50 @@
-export const setCart = cart => {
-  localStorage.setItem("cart", JSON.stringify(cart))
-}
+export const TAX_RATE = process.env.TAX_RATE || 0.1
+export const FREE_SHIPPING_THRESHOLD = process.env.FREE_SHIPPING_THRESHOLD || 10000
+export const SHIPPING_RATE = process.env.SHIPPING_RATE || 500
 
+export const saveCart = (cart) => {
+    localStorage.setItem('cart', JSON.stringify(cart))
+}
 export const getCart = () => {
-  try {
-    const cart = JSON.parse(localStorage.getItem("cart"))
-    if (cart) {
-      return cart
-    }
-  } catch (err) {
-    return err
-  }
-  return []
+    try{
+        const cart = JSON.parse(localStorage.getItem('cart'))
+        if(cart){
+            return cart
+        }
+        
+    } catch(err){
+
+    }   
+
+    return []
 }
 
-export const addToCart = (product, qty = 1) => {
-  const cart = getCart()
 
-  //if the product is already there
-  const indexOfProduct = cart.findIndex(
-    alreadyInCart => alreadyInCart.strapiId === product.strapiId
-  )
+export const cartSubtotal = (cart) => {
+    //Sum up all of the individual product costs
+    const subTotal = cart.reduce((counter, product) => {
+        return counter + product.price_in_cent * product.qty
+    }, 0)
 
-  if (indexOfProduct !== -1) {
-    //update the quantity
-    cart[indexOfProduct].qty += parseInt(qty)
+    return subTotal
+}
 
-    if (cart[indexOfProduct].qty === 0) {
-      //remove product from cart
-      cart.splice(indexOfProduct, 1)
+export const shouldPayShipping = (cart) => {
+    const subTotal = cartSubtotal(cart)
+    
+    return subTotal < FREE_SHIPPING_THRESHOLD
+}
+
+export const cartTotal = (cart) => {
+    if(cart.lenght === 0 ){
+        return 0
     }
-  } else {
-    //set qty 1
-    product.qty = parseInt(qty)
+    
+    const subTotal = cartSubtotal(cart)
 
-    //push the product
-    cart.push(product)
-  }
+    const shipping = shouldPayShipping(cart) ? SHIPPING_RATE : 0
 
-  setCart(cart)
+    const total = subTotal + subTotal * TAX_RATE + shipping
+
+    return Math.round(total)
 }

@@ -1,6 +1,6 @@
 import React from "react";
 import { graphql } from "gatsby";
-import Image from "gatsby-image";
+import { GatsbyImage } from "gatsby-plugin-image";
 import Layout from "../components/Layout";
 import ReactMarkdown from "react-markdown";
 import Seo from "../components/Seo";
@@ -13,7 +13,12 @@ const ShopTemplate = ({ data }) => {
       <section className="shop-template">
         <div className="section-center shop-box">
           <div className="shop-image">
-            {image && <Image fluid={image.childImageSharp.fluid} />}
+            {image && (
+              <GatsbyImage
+                image={image.childImageSharp.gatsbyImageData}
+                alt="Matt"
+              />
+            )}
           </div>
           <div className="shop-content">
             <h3>{title}</h3>
@@ -27,7 +32,7 @@ const ShopTemplate = ({ data }) => {
               data-item-price={price}
               data-item-url="/"
               data-item-description={desc}
-              data-item-image={image.childImageSharp.fluid.src}
+              data-item-image={image.childImageSharp.gatsbyImageData}
               data-item-name={title}
             >
               Add to cart
@@ -61,10 +66,7 @@ export const query = graphql`
       price
       image {
         childImageSharp {
-          fluid(maxWidth: 600, maxHeight: 600) {
-            ...GatsbyImageSharpFluid
-            src
-          }
+          gatsbyImageData(width: 1920, quality: 100, formats: [AUTO])
         }
       }
     }

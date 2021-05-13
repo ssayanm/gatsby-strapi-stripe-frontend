@@ -1,5 +1,4 @@
 const path = require("path");
-// const { createFilePath } = require(`gatsby-source-filesystem`);
 const { paginate } = require("gatsby-awesome-pagination");
 
 // create pages dynamically
@@ -8,6 +7,7 @@ exports.createPages = async ({ graphql, actions }) => {
 
   const blogPostTemplate = path.resolve(`src/templates/blog-template.js`);
   const blogPostPaginate = path.resolve("src/templates/blog-posts.js");
+  const shopTemplate = path.resolve("src/templates/shop-template.js");
 
   const result = await graphql(`
     {
@@ -47,14 +47,6 @@ exports.createPages = async ({ graphql, actions }) => {
     });
   });
 
-  // paginate({
-  //   createPage,
-  //   items: result.data.shop.nodes,
-  //   itemsPerPage: 6,
-  //   pathPrefix: "/blog-posts",
-  //   component: blogPostPaginate,
-  // });
-
   products.forEach((product, index) => {
     createPage({
       path: `/products/${product.slug}`,
@@ -67,16 +59,3 @@ exports.createPages = async ({ graphql, actions }) => {
     });
   });
 };
-
-// exports.onCreateNode = ({ node, actions, getNode }) => {
-//   const { createNodeField } = actions;
-
-//   if (node.internal.type === `MarkdownRemark`) {
-//     const value = createFilePath({ node, getNode });
-//     createNodeField({
-//       name: `slug`,
-//       node,
-//       value,
-//     });
-//   }
-// };

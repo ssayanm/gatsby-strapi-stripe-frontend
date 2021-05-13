@@ -1,14 +1,18 @@
-import React from "react"
-import PropTypes from "prop-types"
-import Image from "gatsby-image"
-import { Link } from "gatsby"
+import React from "react";
+import PropTypes from "prop-types";
+import { GatsbyImage } from "gatsby-plugin-image";
+import { Link } from "gatsby";
 const Product = ({ id, title, image, price, slug, desc }) => {
   return (
     <Link to={`/products/${slug}`} key={id} className="blog">
       <article className="blog">
         <div className="image-box">
           {image && (
-            <Image fluid={image.childImageSharp.fluid} className="shop-img" />
+            <GatsbyImage
+              image={image.childImageSharp.gatsbyImageData}
+              alt={title}
+              className="shop-img"
+            />
           )}
         </div>
 
@@ -23,7 +27,7 @@ const Product = ({ id, title, image, price, slug, desc }) => {
               data-item-price={price}
               data-item-url={`/products/${slug}`}
               data-item-description={desc}
-              data-item-image={image.childImageSharp.fluid.src}
+              data-item-image={image.childImageSharp.gatsbyImageData}
               data-item-name={title}
             >
               Add to cart
@@ -32,8 +36,8 @@ const Product = ({ id, title, image, price, slug, desc }) => {
         </div>
       </article>
     </Link>
-  )
-}
+  );
+};
 
 Product.propTypes = {
   id: PropTypes.string.isRequired,
@@ -42,6 +46,6 @@ Product.propTypes = {
   desc: PropTypes.string.isRequired,
   slug: PropTypes.string.isRequired,
   image: PropTypes.object.isRequired,
-}
+};
 
-export default Product
+export default Product;

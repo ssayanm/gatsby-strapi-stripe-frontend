@@ -48,7 +48,7 @@ module.exports = {
         queryLimit: 1000, // Default to 100
 
         singleTypes: [`home`],
-        contentTypes: [`sliders`, `blogs`, `innerpages`],
+        contentTypes: [`products`, `blogs`, `innerpages`],
       },
     },
     {

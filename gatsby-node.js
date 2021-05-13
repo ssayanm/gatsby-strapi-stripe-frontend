@@ -1,5 +1,5 @@
 const path = require("path");
-const { createFilePath } = require(`gatsby-source-filesystem`);
+// const { createFilePath } = require(`gatsby-source-filesystem`);
 const { paginate } = require("gatsby-awesome-pagination");
 
 // create pages dynamically
@@ -16,10 +16,16 @@ exports.createPages = async ({ graphql, actions }) => {
           slug
         }
       }
+      shop: allStrapiProducts {
+        nodes {
+          slug
+        }
+      }
     }
   `);
 
   const posts = result.data.blogs.nodes;
+  const products = result.data.shop.nodes;
 
   paginate({
     createPage,
@@ -37,6 +43,26 @@ exports.createPages = async ({ graphql, actions }) => {
         slug: blog.slug,
         prev: index === 0 ? null : posts[index - 1].node,
         next: index === posts.length - 1 ? null : posts[index + 1].node,
+      },
+    });
+  });
+
+  // paginate({
+  //   createPage,
+  //   items: result.data.shop.nodes,
+  //   itemsPerPage: 6,
+  //   pathPrefix: "/blog-posts",
+  //   component: blogPostPaginate,
+  // });
+
+  products.forEach((product, index) => {
+    createPage({
+      path: `/products/${product.slug}`,
+      component: shopTemplate,
+      context: {
+        slug: product.slug,
+        prev: index === 0 ? null : products[index - 1].node,
+        next: index === products.length - 1 ? null : products[index + 1].node,
       },
     });
   });

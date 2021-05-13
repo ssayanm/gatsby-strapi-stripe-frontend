@@ -34,15 +34,21 @@ const data = [
   //     },
   //   ],
   // },
-
   {
     id: 4,
+    text: "shop",
+    url: "/shop",
+    sub: [],
+  },
+
+  {
+    id: 5,
     text: "blog",
     url: "/blog-posts",
     sub: [],
   },
   {
-    id: 5,
+    id: 6,
     text: "contact",
     url: "/contact",
     sub: [],

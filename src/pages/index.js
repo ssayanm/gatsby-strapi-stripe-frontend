@@ -1,53 +1,58 @@
-import React from "react"
-import { Link, graphql } from "gatsby"
+import React from "react";
+import { graphql } from "gatsby";
+import Layout from "../components/Layout";
+import Hero from "../components/Hero";
+import Info from "../components/Info";
+import Blogs from "../components/Blogs";
+import Service from "../components/Service";
+import MiniContact from "../components/MiniContact";
+import Seo from "../components/Seo";
 
-import Layout from "../components/layout"
-import Image from "gatsby-image"
-import SEO from "../components/seo"
-import "../style.css"
+const index = ({ data }) => {
+  const {
+    allStrapiBlogs: { nodes: blogs },
+  } = data;
 
-const IndexPage = ({ data }) => (
-  <Layout>
-    <SEO title="Home" />
-    {data.allStrapiProducts.nodes.map(product => {
-      return (
-        <Link to={`/products/${product.slug}`} key={product.id}>
-          <div key={product.id} className="home">
-            <div>
-              <Image
-                fluid={product.thumbnail.childImageSharp.fluid}
-                className="home-img"
-              />
-              <p>
-                {product.name} | ${product.price}
-              </p>
-            </div>
-          </div>
-        </Link>
-      )
-    })}
-  </Layout>
-)
-
-export default IndexPage
+  return (
+    <Layout>
+      <Seo
+        title="Home"
+        description="Connecticut Certified Relationship Coach Pleasant Smith"
+      />
+      <Hero />
+      <Info />
+      <Service />
+      <Blogs
+        blogs={blogs}
+        title="latest articles"
+        showLink
+        className="blog-section"
+      />
+      <MiniContact />
+    </Layout>
+  );
+};
 
 export const query = graphql`
-  query MyQuery {
-    allStrapiProducts {
+  {
+    allStrapiBlogs(sort: { fields: date, order: DESC }, limit: 3) {
       nodes {
-        id
-        content
-        name
-        price
         slug
-        thumbnail {
+        content
+        desc
+        date(formatString: "Do MMMM, YYYY")
+        id
+        title
+        category
+        author
+        image {
           childImageSharp {
-            fluid {
-              ...GatsbyImageSharpFluid
-            }
+            gatsbyImageData(width: 1920, quality: 100, formats: [AUTO])
           }
         }
       }
     }
   }
-`
+`;
+
+export default index;

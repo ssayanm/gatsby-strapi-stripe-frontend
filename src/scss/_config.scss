@@ -1,0 +1,41 @@
+$font-primary: "Marcellus", sans-serif;
+$font-secondary: "Open Sans", sans-serif;
+
+$primary-color: #72147e;
+$primary-color-1: #e5d8c8;
+$secondary-color: #66391a;
+$secondary-color-1: #151110;
+
+$white: #faf9f7;
+$white-alt: #ffffff;
+$dark-color: #101010;
+$dark-red: #f44032;
+$dark-light: #37474f;
+$light-color: #ececec;
+$text-color: #102a42;
+$gray: #324d67;
+$gray-alt: #f7f2ef;
+
+$transition: all 0.3s linear;
+$spacing: 0.2rem;
+$radius: 0.25rem;
+$light-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+$dark-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+$max-width: 1280px;
+$fixed-width: 700px;
+$gradient: linear-gradient(315deg, #55efc4 0%, #1d1d1d 74%);
+
+//set text color based on background
+@function set-text-color($color) {
+  @if (lightness($color) > 70%) {
+    @return #333;
+  } @else {
+    @return white;
+  }
+}
+
+//set background & text color
+@mixin set-background($color) {
+  background-color: $color;
+  color: set-text-color($color);
+}

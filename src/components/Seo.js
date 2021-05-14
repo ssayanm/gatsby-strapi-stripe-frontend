@@ -11,7 +11,6 @@ const query = graphql`
         # siteUrl
         image
         siteTitle: title
-        # instagramUrl
       }
     }
   }

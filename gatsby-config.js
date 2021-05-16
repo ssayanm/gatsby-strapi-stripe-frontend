@@ -10,9 +10,9 @@ require("dotenv").config({
 
 module.exports = {
   siteMetadata: {
-    title: "Pleasant Smith - Certified Relationship Coach",
-    description: "Connecticut Certified Relationship Coach Pleasant Smith",
-    author: "Pleasant Smith",
+    title: "Sayan - Freelance web developer",
+    description: "Freelance web developer Sayan",
+    author: "Sayan Mukherjee",
     image: "/src/assets/ps.jpg",
     // instagramUrl: "https://www.instagram.com/bumgarnerkathryn/",
     // siteUrl: "http://www.matttitus.com",

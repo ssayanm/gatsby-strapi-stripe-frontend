@@ -39,18 +39,6 @@ const ShopTemplate = ({ data }) => {
             </button>
           </div>
         </div>
-        {/*
-        <article className="blog">
-          <div className="image-box"></div>
-
-          <div className="blog-card">
-            <h4>{title}</h4>
-            <p>{content}</p>
-            <div className="blog-footer">
-              <p>${price}</p>
-            </div>
-          </div>
-        </article>*/}
       </section>
     </Layout>
   );

@@ -11,7 +11,7 @@ require("dotenv").config({
 module.exports = {
   siteMetadata: {
     title: "Sayan - Freelance web developer",
-    description: "Freelance web developer Sayan",
+    description: "Freelance web developer. Sayan",
     author: "Sayan Mukherjee",
     image: "/src/assets/ps.jpg",
     // instagramUrl: "https://www.instagram.com/bumgarnerkathryn/",

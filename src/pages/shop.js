@@ -33,10 +33,7 @@ export const query = graphql`
         category
         image {
           childImageSharp {
-            fluid(maxWidth: 600, maxHeight: 600) {
-              ...GatsbyImageSharpFluid
-              src
-            }
+            gatsbyImageData(width: 1920, quality: 100, formats: [AUTO])
           }
         }
       }

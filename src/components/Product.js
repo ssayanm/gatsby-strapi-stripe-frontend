@@ -22,7 +22,7 @@ const Product = ({ id, title, image, price, slug, shortdescription }) => {
           <div className="shop-footer">
             <p>${price}</p>
             <button
-              className="snipcart-add-item btn"
+              className="snipcart-add-item btn-secondary"
               data-item-id={id}
               data-item-price={price}
               data-item-url={`/products/${slug}`}

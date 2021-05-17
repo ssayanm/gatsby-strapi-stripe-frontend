@@ -8,10 +8,8 @@
   font-weight: 700;
   -webkit-transition: $transition;
   transition: $transition;
-  font-size: 0.875rem;
   border: 2px solid transparent;
   cursor: pointer;
-  width: 15rem;
   text-align: center;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
   // border-radius: $radius;
@@ -19,6 +17,8 @@
 
 .btn-primary {
   @extend %btn;
+  // font-size: 0.875rem;
+  width: 15rem;
   @include set-background($primary-color);
   &:hover {
     transform: scale(0.98);
@@ -35,6 +35,8 @@
     background: $dark-red;
     color: $white;
   }
+  border-radius: $radius;
+  padding: 0.5rem 0.75rem;
 }
 
 .btn-transparent {

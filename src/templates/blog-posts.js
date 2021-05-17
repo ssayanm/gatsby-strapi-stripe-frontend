@@ -4,7 +4,7 @@ import { graphql } from "gatsby";
 import Blogs from "../components/Blogs";
 import Seo from "../components/Seo";
 import Pager from "../components/Pager";
-import { Fade } from "react-reveal";
+
 import MiniContact from "../components/MiniContact";
 
 const Blog = ({
@@ -22,10 +22,8 @@ const Blog = ({
       />
 
       <section className="blog-page">
-        <Fade bottom>
-          <Blogs blogs={blogs} title="The Pleasant Blog" />
-          <Pager pageContext={pageContext} />
-        </Fade>
+        <Blogs blogs={blogs} title="The Pleasant Blog" />
+        <Pager pageContext={pageContext} />
       </section>
       <MiniContact />
     </Layout>

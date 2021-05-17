@@ -26,7 +26,7 @@ export const query = graphql`
     allStrapiProducts {
       nodes {
         slug
-        description
+        shortdescription
         price
         id
         title

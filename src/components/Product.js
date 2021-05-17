@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { GatsbyImage } from "gatsby-plugin-image";
 import { Link } from "gatsby";
-const Product = ({ id, title, image, price, slug, desc }) => {
+const Product = ({ id, title, image, price, slug, shortdescription }) => {
   return (
     <Link to={`/products/${slug}`} key={id} className="shop">
       <article className="shop">
@@ -18,7 +18,7 @@ const Product = ({ id, title, image, price, slug, desc }) => {
 
         <div className="shop-card">
           <h4>{title}</h4>
-          <p>{desc}</p>
+          <p>{shortdescription}</p>
           <div className="shop-footer">
             <p>${price}</p>
             <button
@@ -26,7 +26,7 @@ const Product = ({ id, title, image, price, slug, desc }) => {
               data-item-id={id}
               data-item-price={price}
               data-item-url={`/products/${slug}`}
-              data-item-description={desc}
+              data-item-description={shortdescription}
               data-item-image={image.childImageSharp.gatsbyImageData}
               data-item-name={title}
             >
@@ -43,7 +43,7 @@ Product.propTypes = {
   id: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
-  desc: PropTypes.string.isRequired,
+  shortdescription: PropTypes.string.isRequired,
   slug: PropTypes.string.isRequired,
   image: PropTypes.object.isRequired,
 };

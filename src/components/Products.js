@@ -5,7 +5,7 @@ import { Fade } from "react-reveal";
 
 export const Products = ({ products, title, showLink }) => {
   return (
-    <section className="section">
+    <section className="section shop-section">
       <Fade bottom>
         <Title title={title} />
 

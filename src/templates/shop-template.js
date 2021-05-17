@@ -6,10 +6,10 @@ import ReactMarkdown from "react-markdown";
 import Seo from "../components/Seo";
 
 const ShopTemplate = ({ data }) => {
-  const { id, content, title, desc, price, image } = data.product;
+  const { id, content, title, shortdescription, price, image } = data.product;
   return (
     <Layout>
-      <Seo title={title} description={desc} />
+      <Seo title={title} description={shortdescription} />
       <section className="shop-template">
         <div className="section-center shop-box">
           <div className="shop-image">
@@ -31,7 +31,7 @@ const ShopTemplate = ({ data }) => {
               data-item-id={id}
               data-item-price={price}
               data-item-url="/"
-              data-item-description={desc}
+              data-item-description={shortdescription}
               data-item-image={image.childImageSharp.gatsbyImageData}
               data-item-name={title}
             >
@@ -50,7 +50,7 @@ export const query = graphql`
       id
       content
       title
-      description
+      shortdescription
       price
       image {
         childImageSharp {

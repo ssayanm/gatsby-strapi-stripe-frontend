@@ -1148,15 +1148,17 @@ Single Product Template
   }
 }
 @media screen and (min-width: 992px) {
-  .shop-box {
-    flex-direction: row;
-    align-items: flex-start;
-  }
-  .shop-content {
-    width: 40rem;
-  }
-  .shop-image {
-    width: 25rem;
+  .shop-template {
+    .shop-box {
+      flex-direction: row;
+      align-items: flex-start;
+    }
+    .shop-content {
+      width: 40rem;
+    }
+    .shop-image {
+      width: 25rem;
+    }
   }
 }
 

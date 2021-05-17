@@ -4,6 +4,7 @@ import { GatsbyImage } from "gatsby-plugin-image";
 import Layout from "../components/Layout";
 import ReactMarkdown from "react-markdown";
 import Seo from "../components/Seo";
+import MiniContact from "../components/MiniContact";
 
 const ShopTemplate = ({ data }) => {
   const { id, content, title, shortdescription, price, image } = data.product;
@@ -40,6 +41,7 @@ const ShopTemplate = ({ data }) => {
           </div>
         </div>
       </section>
+      <MiniContact />
     </Layout>
   );
 };

@@ -7,7 +7,10 @@ const CartLink = () => {
   // console.log(cartItems);
   return (
     <div className="cart-link-container">
-      <span className="cart-link-total">10</span>
+      <Link>
+        Cart
+        <span className="cart-link-total">10</span>
+      </Link>
     </div>
   );
 };

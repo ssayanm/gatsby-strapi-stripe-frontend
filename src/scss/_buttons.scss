@@ -18,7 +18,7 @@
 .btn-primary {
   @extend %btn;
   // font-size: 0.875rem;
-  width: 15rem;
+  width: 16rem;
   @include set-background($primary-color);
   &:hover {
     transform: scale(0.98);

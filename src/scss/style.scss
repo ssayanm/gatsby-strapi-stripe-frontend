@@ -306,7 +306,7 @@ Sidebar
     border-radius: $radius;
 
     &:hover {
-      color: yellow;
+      color: $primary-color;
       font-size: 1.5rem;
     }
   }
@@ -1161,5 +1161,95 @@ Single Product Template
     }
   }
 }
+
+/* 
+====== 
+Cart Link
+======
+*/
+.carticon {
+  position: absolute;
+}
+.cart-link-container {
+  position: relative;
+
+  a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-transform: capitalize;
+    color: $gray;
+    letter-spacing: $spacing;
+    // margin-bottom: 0.5rem;
+    font-size: 1.25rem;
+    transition: $transition;
+    border-radius: $radius;
+
+    // opacity: 0;
+    animation: slideUpp 0.75s ease-in-out 0.3s forwards;
+    &:nth-of-type(1) {
+      animation-delay: 1.5s;
+    }
+
+    &:hover {
+      color: $primary-color;
+      // font-size: 1.5rem;
+    }
+    @keyframes slideUpp {
+      0% {
+        transform: translateY(200px);
+        opacity: 0;
+      }
+      100% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .cart-link-total {
+      display: block;
+
+      background: $primary-color;
+
+      padding: 0rem 0.4rem;
+      border-radius: 50%;
+      font-size: 1rem;
+      color: $white;
+      margin-left: 0.5rem;
+    }
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .cart-link-container {
+    a {
+      animation: none;
+      .cart-link-total {
+        position: absolute;
+        top: -1.25rem;
+        right: -1.25rem;
+      }
+    }
+  }
+}
+
+// .cart-link-container a {
+//   opacity: 0;
+//   animation: slideUpp 0.75s ease-in-out 0.3s forwards;
+//   &:nth-of-type(1) {
+//     animation-delay: 1.5s;
+//   }
+// }
+
+// @keyframes slideUpp {
+//   0% {
+//     transform: translateY(200px);
+//     opacity: 0;
+//   }
+//   100% {
+//     transform: translateY(0);
+//     opacity: 1;
+//   }
+// }
 
 @import "buttons";

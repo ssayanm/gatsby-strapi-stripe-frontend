@@ -25,7 +25,6 @@ const Navbar = ({ toggleSidebar }) => {
           </button>
         </div>
         <PageLinks styleClass="nav-links"></PageLinks>
-        <CartLink />
       </div>
     </nav>
   );

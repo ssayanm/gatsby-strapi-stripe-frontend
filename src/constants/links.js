@@ -1,6 +1,9 @@
 import React from "react";
+// import CartLink from "../components/Cart/CartLink";
 import { Link } from "gatsby";
 import { MdHome, MdKeyboardArrowDown } from "react-icons/md";
+import { StaticImage } from "gatsby-plugin-image";
+
 const data = [
   {
     id: 1,
@@ -86,6 +89,13 @@ const links = ({ styleClass }) => {
   return (
     <ul className={`page-links ${styleClass ? styleClass : ""}`}>
       {tempLinks}
+      <StaticImage
+        src="../assets/shopping-bag.svg"
+        alt="cart link"
+        className="carticon"
+        width={60}
+        layout="fixed"
+      />
     </ul>
   );
 };

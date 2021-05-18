@@ -1156,6 +1156,82 @@ Single Product Template
   }
 }
 
+/*
+=============== 
+Shop Page
+===============
+*/
+
+.cart-section {
+  padding: 4rem 0;
+}
+.empty-cart {
+  text-align: center;
+  text-transform: capitalize;
+}
+.cart-items {
+  width: $max-width;
+  margin: 0 auto;
+  max-width: $max-width;
+
+  h2 {
+    margin-bottom: 2rem;
+    text-align: center;
+    text-transform: capitalize;
+  }
+
+  .cart-item {
+    display: grid;
+    align-items: center;
+    grid-template-columns: auto 1fr auto;
+    grid-column-gap: 1.5rem;
+    margin: 1.5rem 0;
+
+    img {
+      width: 5rem;
+    }
+
+    h4 {
+      font-size: 0.85rem;
+      text-transform: capitalize;
+      letter-spacing: $spacing;
+      margin-bottom: 0;
+    }
+
+    h5 {
+      margin: 0.5rem 0;
+      letter-spacing: $spacing;
+    }
+  }
+  .item-amount {
+    text-align: center;
+    margin-bottom: 0;
+  }
+  .cart-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+  }
+  .remove-btn {
+    color: $dark-red;
+    letter-spacing: $spacing;
+    cursor: pointer;
+    font-size: 0.8rem;
+  }
+  .amount-btn {
+    color: $primary-color;
+    font-size: 1rem;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .cart-items {
+    min-height: 45vw;
+    width: 40rem;
+    margin: 0 auto;
+  }
+}
+
 /* 
 ====== 
 Cart Link

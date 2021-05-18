@@ -4,7 +4,7 @@
 export const flattenProducts = (data) => {
   return data.map((item) => {
     //cloudinary
-    let image = (item.image && item.image.url) || null;
+    let image = (item.image && process.env.GATSBY_API_URL) || null;
     //local
     // let image = `${url}${item.image.url}`;
     return { ...item, image };

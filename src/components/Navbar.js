@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "gatsby";
-import CartLink from "./Cart/CartLink";
-// import SocialLinks from "../constants/socialLinks";
+
 import { StaticImage } from "gatsby-plugin-image";
 import { FaAlignRight } from "react-icons/fa";
 import PageLinks from "../constants/links";

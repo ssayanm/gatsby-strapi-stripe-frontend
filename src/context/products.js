@@ -1,6 +1,6 @@
 import React, { useEffect, useLayoutEffect, createContext } from "react";
 import axios from "axios";
-import url from "../utils/URL";
+
 import { featuredProducts, flattenProducts, paginate } from "../utils/helpers";
 export const ProductContext = createContext();
 
@@ -39,7 +39,7 @@ const ProductProvider = ({ children }) => {
 
   useEffect(() => {
     setLoading(true);
-    axios.get(`${url}/products`).then((response) => {
+    axios.get(`${process.env.GATSBY_API_URL}/products`).then((response) => {
       const featured = featuredProducts(flattenProducts(response.data));
       const products = flattenProducts(response.data);
       setProducts(products);

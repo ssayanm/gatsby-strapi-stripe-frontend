@@ -42,3 +42,28 @@
 // };
 
 // export default Cart;
+
+import React from "react";
+import Layout from "../components/Layout";
+import Seo from "../components/Seo";
+import TitleBar from "../components/TitleBar";
+import CartItem from "../components/Cart/CartItem";
+
+const Cart = () => {
+  return (
+    <Layout>
+      <Seo
+        title="About Pleasant"
+        description="Connecticut Certified Relationship Coach Pleasant Smith"
+      />
+      <TitleBar title="your cart" desc=" " />
+      <section className="cart-items cart-section">
+        <h2>your cart</h2>
+
+        <h2>Total: ₹200</h2>
+      </section>
+    </Layout>
+  );
+};
+
+export default Cart;

@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
-import { CartContext } from "../../context/cart";
+// import { Link } from "react-router-dom";
+// import { CartContext } from "../../context/cart";
 import { StaticImage } from "gatsby-plugin-image";
 
 const CartLink = () => {

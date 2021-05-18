@@ -1,8 +1,6 @@
 import React from "react";
-// import CartLink from "../components/Cart/CartLink";
 import { Link } from "gatsby";
 import { MdHome, MdKeyboardArrowDown } from "react-icons/md";
-import { StaticImage } from "gatsby-plugin-image";
 import CartLink from "../components/Cart/CartLink";
 
 const data = [

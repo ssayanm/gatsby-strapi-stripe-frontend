@@ -3,6 +3,7 @@ import React from "react";
 import { Link } from "gatsby";
 import { MdHome, MdKeyboardArrowDown } from "react-icons/md";
 import { StaticImage } from "gatsby-plugin-image";
+import CartLink from "../components/Cart/CartLink";
 
 const data = [
   {
@@ -89,13 +90,7 @@ const links = ({ styleClass }) => {
   return (
     <ul className={`page-links ${styleClass ? styleClass : ""}`}>
       {tempLinks}
-      <StaticImage
-        src="../assets/shopping-bag.svg"
-        alt="cart link"
-        className="carticon"
-        width={60}
-        layout="fixed"
-      />
+      <CartLink />
     </ul>
   );
 };

@@ -16,7 +16,7 @@ const Navbar = ({ toggleSidebar }) => {
               src="../assets/romance.svg"
               alt="Pleasant Smith"
               className="logo"
-              width={100}
+              width={70}
               layout="fixed"
             />
           </Link>

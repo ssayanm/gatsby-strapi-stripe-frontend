@@ -6,16 +6,16 @@ import Seo from "../components/Seo";
 import TitleBar from "../components/TitleBar";
 import CartItem from "../components/Cart/CartItem";
 import { CartContext } from "../context/cart";
-import { UserContext } from "../context/user";
+// import { UserContext } from "../context/user";
 import EmptyCart from "../components/Cart/EmptyCart";
 
 const Cart = () => {
   const { cart, total } = useContext(CartContext);
-  const { user } = useContext(UserContext);
+  // const { user } = useContext(UserContext);
 
-  if (cart.length === 0) {
-    return <EmptyCart />;
-  }
+  // if (cart.length === 0) {
+  //   return <EmptyCart />;
+  // }
   return (
     <Layout>
       <Seo
@@ -23,19 +23,25 @@ const Cart = () => {
         description="Connecticut Certified Relationship Coach Pleasant Smith"
       />
       <TitleBar title="your cart" desc=" " />
-      <main className="cart-items cart-section">
+      <section className="cart-items cart-section">
         <h2>your cart</h2>
         {cart.map((item) => {
           return <CartItem key={item.id} {...item} />;
         })}
         <h2>Total: ₹{total}</h2>
-      </main>
+      </section>
     </Layout>
   );
 };
 
 export default Cart;
 
-//  <Link to="/contact" className="btn-primary center-btn">
-// back home
-// </Link>
+// {user.token ? (
+//   <Link to="/checkout" className="center-btn btn-primary btn-block">
+//     checkout
+//   </Link>
+// ) : (
+//   <Link to="/login" className="center-btn btn-primary btn-block">
+//     login
+//   </Link>
+// )}

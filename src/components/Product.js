@@ -1,8 +1,18 @@
-import React from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { GatsbyImage } from "gatsby-plugin-image";
 import { Link } from "gatsby";
-const Product = ({ id, title, image, price, slug, shortdescription }) => {
+import { useParams, useHistory } from "react-router-dom";
+import { CartContext } from "../context/cart";
+
+const Product = (product) => {
+  // const { id } = useParams();
+  // const history = useHistory();
+  const { addToCart } = useContext(CartContext);
+  // const prod = products.find((item) => item.id === parseInt(id));
+
+  const { id, title, image, price, slug, shortdescription } = product;
+
   return (
     <Link to={`/products/${slug}`} key={id} className="shop">
       <article className="shop">
@@ -22,13 +32,11 @@ const Product = ({ id, title, image, price, slug, shortdescription }) => {
           <div className="shop-footer">
             <p>${price}</p>
             <button
-              className="snipcart-add-item btn-secondary"
-              data-item-id={id}
-              data-item-price={price}
-              data-item-url={`/products/${slug}`}
-              data-item-description={shortdescription}
-              data-item-image={image.childImageSharp.gatsbyImageData}
-              data-item-name={title}
+              className="btn-secondary"
+              onClick={() => {
+                addToCart(product);
+                // history.push("/cart");
+              }}
             >
               Add to cart
             </button>

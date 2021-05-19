@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import Layout from "../components/Layout";
-import { Link } from "gatsby";
+// import { Link } from "gatsby";
 
 import Seo from "../components/Seo";
 import TitleBar from "../components/TitleBar";
@@ -13,9 +13,9 @@ const Cart = () => {
   const { cart, total } = useContext(CartContext);
   // const { user } = useContext(UserContext);
 
-  // if (cart.length === 0) {
-  //   return <EmptyCart />;
-  // }
+  if (cart.length === 0) {
+    return <EmptyCart />;
+  }
   return (
     <Layout>
       <Seo
@@ -24,7 +24,6 @@ const Cart = () => {
       />
       <TitleBar title="your cart" desc=" " />
       <section className="cart-items cart-section">
-        <h2>your cart</h2>
         {cart.map((item) => {
           return <CartItem key={item.id} {...item} />;
         })}

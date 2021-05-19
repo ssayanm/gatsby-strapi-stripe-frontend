@@ -2,7 +2,8 @@ import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { GatsbyImage } from "gatsby-plugin-image";
 import { Link } from "gatsby";
-import { useParams, useHistory } from "react-router-dom";
+// import { useParams, useHistory } from "react-router-dom";
+import { navigate } from "gatsby";
 import { CartContext } from "../context/cart";
 
 const Product = (product) => {
@@ -35,7 +36,7 @@ const Product = (product) => {
               className="btn-secondary"
               onClick={() => {
                 addToCart(product);
-                // history.push("/cart");
+                navigate("/cart");
               }}
             >
               Add to cart

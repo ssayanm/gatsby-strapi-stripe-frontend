@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { FaAngleUp, FaAngleDown } from "react-icons/fa";
 import { CartContext } from "../../context/cart";
+import { GatsbyImage } from "gatsby-plugin-image";
 
 const CartItem = ({ id, image, title, price, amount }) => {
   const { removeItem, increaseAmount, decreaseAmount } = useContext(
@@ -9,7 +10,8 @@ const CartItem = ({ id, image, title, price, amount }) => {
 
   return (
     <article className="cart-item">
-      <img src={image} alt={title} />
+      <GatsbyImage image={image.childImageSharp.gatsbyImageData} alt={title} />
+
       <div>
         <h4>{title}</h4>
         <h5>₹{price}</h5>

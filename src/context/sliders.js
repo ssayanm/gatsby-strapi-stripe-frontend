@@ -1,6 +1,6 @@
 import React, { useEffect, createContext } from "react";
 import axios from "axios";
-import url from "../utils/URL";
+// import url from "../utils/URL";
 export const SliderContext = createContext();
 
 const SliderProvider = ({ children }) => {
@@ -9,7 +9,7 @@ const SliderProvider = ({ children }) => {
 
   useEffect(() => {
     setLoading(true);
-    axios.get(`${url}/sliders`).then((response) => {
+    axios.get(`${process.env.GATSBY_API_URL}/sliders`).then((response) => {
       const sliders = response.data;
       setSliders(sliders);
       setLoading(false);

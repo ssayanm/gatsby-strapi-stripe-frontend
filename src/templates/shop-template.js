@@ -7,7 +7,14 @@ import Seo from "../components/Seo";
 import MiniContact from "../components/MiniContact";
 
 const ShopTemplate = ({ data }) => {
-  const { id, content, title, shortdescription, price, image } = data.product;
+  const {
+    id,
+    description,
+    title,
+    shortdescription,
+    price,
+    image,
+  } = data.product;
   return (
     <Layout>
       <Seo title={title} description={shortdescription} />
@@ -25,7 +32,7 @@ const ShopTemplate = ({ data }) => {
             <h3>{title}</h3>
             <p>${price}</p>
             <article>
-              <ReactMarkdown children={content} />
+              <ReactMarkdown children={description} />
             </article>
             <button
               className="snipcart-add-item btn-secondary"
@@ -50,7 +57,7 @@ export const query = graphql`
   query GetSingleProduct($slug: String) {
     product: strapiProducts(slug: { eq: $slug }) {
       id
-      content
+      description
       title
       shortdescription
       price

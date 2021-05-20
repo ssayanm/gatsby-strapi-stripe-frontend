@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import { graphql } from "gatsby";
 import { GatsbyImage } from "gatsby-plugin-image";
 import Layout from "../components/Layout";
 import ReactMarkdown from "react-markdown";
 import Seo from "../components/Seo";
 import MiniContact from "../components/MiniContact";
+import { navigate } from "gatsby";
+import { CartContext } from "../context/cart";
 
 const ShopTemplate = ({ data }) => {
   const {
@@ -15,6 +17,9 @@ const ShopTemplate = ({ data }) => {
     price,
     image,
   } = data.product;
+
+  const { addToCart } = useContext(CartContext);
+
   return (
     <Layout>
       <Seo title={title} description={shortdescription} />
@@ -35,13 +40,11 @@ const ShopTemplate = ({ data }) => {
               <ReactMarkdown children={description} />
             </article>
             <button
-              className="snipcart-add-item btn-secondary"
-              data-item-id={id}
-              data-item-price={price}
-              data-item-url="/"
-              data-item-description={shortdescription}
-              data-item-image={image.childImageSharp.gatsbyImageData}
-              data-item-name={title}
+              className="btn-secondary"
+              onClick={() => {
+                addToCart(data.product);
+                navigate("/cart");
+              }}
             >
               Add to cart
             </button>

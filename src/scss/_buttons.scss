@@ -39,6 +39,18 @@
   padding: 0.5rem 0.75rem;
 }
 
+.btn-secondary-alt {
+  @extend %btn;
+  @include set-background($primary-color);
+  &:hover {
+    transform: scale(0.98);
+    background: $dark-red;
+    color: $white;
+  }
+  border-radius: $radius;
+  padding: 0.5rem 0.75rem;
+}
+
 .btn-transparent {
   @extend %btn;
   @include set-background($white-alt);

@@ -15,36 +15,38 @@ const Product = (product) => {
   const { id, title, image, price, slug, shortdescription } = product;
 
   return (
-    <Link to={`/products/${slug}`} key={id} className="shop">
-      <article className="shop">
-        <div className="image-box">
-          {image && (
-            <GatsbyImage
-              image={image.childImageSharp.gatsbyImageData}
-              alt={title}
-              className="shop-img"
-            />
-          )}
-        </div>
+    <article className="shop">
+      <div className="image-box">
+        {image && (
+          <GatsbyImage
+            image={image.childImageSharp.gatsbyImageData}
+            alt={title}
+            className="shop-img"
+          />
+        )}
+      </div>
 
-        <div className="shop-card">
-          <h4>{title}</h4>
-          <p>{shortdescription}</p>
-          <div className="shop-footer">
-            <p>${price}</p>
-            <button
-              className="btn-secondary"
-              onClick={() => {
-                addToCart(product);
-                navigate("/cart");
-              }}
-            >
-              Add to cart
-            </button>
-          </div>
+      <div className="shop-card">
+        <h4>{title}</h4>
+        <p>{shortdescription}</p>
+        <p>${price}</p>
+        <div className="shop-footer">
+          <Link to={`/products/${slug}`} key={id} className="btn-secondary-alt">
+            {" "}
+            View Details
+          </Link>
+          <button
+            className="btn-secondary"
+            onClick={() => {
+              addToCart(product);
+              navigate("/cart");
+            }}
+          >
+            Add to cart
+          </button>
         </div>
-      </article>
-    </Link>
+      </div>
+    </article>
   );
 };
 

@@ -2,37 +2,8 @@ import React from "react";
 // import { GatsbyImage } from "gatsby-plugin-image";
 import { Fade } from "react-reveal";
 import { Link } from "gatsby";
-// import ReactMarkdown from "react-markdown";
 
 const Info = () => {
-  // const data = useStaticQuery(graphql`
-  //   query siteInfo {
-  //     infodata: strapiHome {
-  //       title
-  //       description
-  //       caption
-  //       image {
-  //         childImageSharp {
-  //           gatsbyImageData(
-  //             width: 500
-  //             quality: 100
-  //             formats: [AUTO, WEBP, AVIF]
-  //           )
-  //         }
-  //       }
-  //     }
-  //     sitemeta: site(siteMetadata: { title: {} }) {
-  //       siteMetadata {
-  //         siteUrl
-  //         author
-  //       }
-  //     }
-  //   }
-  // `);
-
-  // const { title, description, image, caption } = data.infodata;
-  // const { author } = data.sitemeta.siteMetadata;
-
   return (
     <section className="section info bg-grey">
       <article>

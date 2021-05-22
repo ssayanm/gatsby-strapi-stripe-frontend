@@ -1,6 +1,5 @@
 import React from "react";
 import { GiLoveMystery, GiLovers, GiRoyalLove } from "react-icons/gi";
-// import { RiCarWashingLine } from "react-icons/ri";
 
 const services = [
   {

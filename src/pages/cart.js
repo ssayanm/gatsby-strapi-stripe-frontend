@@ -1,12 +1,12 @@
 import React, { useContext } from "react";
 import Layout from "../components/Layout";
-// import { Link } from "gatsby";
+import { Link } from "gatsby";
 
 import Seo from "../components/Seo";
 import TitleBar from "../components/TitleBar";
 import CartItem from "../components/cart/CartItem";
 import { CartContext } from "../context/cart";
-// import { UserContext } from "../context/user";
+import { UserContext } from "../context/user";
 import EmptyCart from "../components/cart/EmptyCart";
 
 const Cart = () => {
@@ -28,6 +28,13 @@ const Cart = () => {
           return <CartItem key={item.id} {...item} />;
         })}
         <h2>Total: ${total}</h2>
+        <Link to="/checkout" className="btn btn-primary btn-block">
+          checkout
+        </Link>
+
+        <Link to="/login" className="btn btn-primary btn-block">
+          login
+        </Link>
       </section>
     </Layout>
   );

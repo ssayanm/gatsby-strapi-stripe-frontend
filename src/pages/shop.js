@@ -1,7 +1,7 @@
 import React from "react";
 import Layout from "../components/Layout";
 import { graphql } from "gatsby";
-import Products from "../components/Products";
+import Products from "../components/Product/Products";
 import Seo from "../components/Seo";
 import MiniContact from "../components/MiniContact";
 

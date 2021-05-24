@@ -4,7 +4,7 @@ import { GatsbyImage } from "gatsby-plugin-image";
 import { Link } from "gatsby";
 // import { useParams, useHistory } from "react-router-dom";
 import { navigate } from "gatsby";
-import { CartContext } from "../context/cart";
+import { CartContext } from "../../context/cart";
 
 const Product = (product) => {
   // const { id } = useParams();

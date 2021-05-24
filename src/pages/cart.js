@@ -4,10 +4,10 @@ import Layout from "../components/Layout";
 
 import Seo from "../components/Seo";
 import TitleBar from "../components/TitleBar";
-import CartItem from "../components/Cart/CartItem";
+import CartItem from "../components/cart/CartItem";
 import { CartContext } from "../context/cart";
 // import { UserContext } from "../context/user";
-import EmptyCart from "../components/Cart/EmptyCart";
+import EmptyCart from "../components/cart/EmptyCart";
 
 const Cart = () => {
   const { cart, total } = useContext(CartContext);

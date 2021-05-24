@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "gatsby";
 import { MdHome, MdKeyboardArrowDown } from "react-icons/md";
-import CartLink from "../components/Cart/CartLink";
+import CartLink from "../components/cart/CartLink";
 
 const data = [
   {

@@ -38,7 +38,7 @@ const Login = () => {
       const newUser = { token, username };
       userLogin(newUser);
       showAlert({ msg: `you are logged in: ${username}. shop away my friend` });
-      navigate("/products");
+      navigate("/shop");
     } else {
       showAlert({
         msg: `there was an error, please try again`,

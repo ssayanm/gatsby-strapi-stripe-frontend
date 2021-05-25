@@ -11,7 +11,7 @@ import EmptyCart from "../components/cart/EmptyCart";
 
 const Cart = () => {
   const { cart, total } = useContext(CartContext);
-  // const { user } = useContext(UserContext);
+  const { user } = useContext(UserContext);
 
   if (cart.length === 0) {
     return <EmptyCart />;
@@ -28,13 +28,15 @@ const Cart = () => {
           return <CartItem key={item.id} {...item} />;
         })}
         <h2>Total: ${total}</h2>
-        <Link to="/checkout" className="btn btn-primary btn-block">
-          checkout
-        </Link>
-
-        <Link to="/login" className="btn btn-primary btn-block">
-          login
-        </Link>
+        {user.token ? (
+          <Link to="/checkout" className="btn-primary center-btn">
+            checkout
+          </Link>
+        ) : (
+          <Link to="/login" className="btn-primary center-btn">
+            login
+          </Link>
+        )}
       </section>
     </Layout>
   );

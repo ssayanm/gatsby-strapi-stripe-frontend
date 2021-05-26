@@ -51,6 +51,16 @@
   padding: 0.5rem 0.75rem;
 }
 
+.btn-login {
+  @extend %btn;
+  // background: transparent;
+  display: inline-block;
+  border: none;
+  &:hover {
+    color: $primary-color;
+  }
+}
+
 .btn-transparent {
   @extend %btn;
   @include set-background($white-alt);
@@ -65,4 +75,34 @@
   display: block;
   margin: 0 auto;
   margin-top: 3rem;
+}
+
+/* 
+====== 
+Login Button
+======
+*/
+.login-btn {
+  text-transform: capitalize;
+  background: transparent;
+  display: inline-block;
+  border: none;
+  cursor: pointer;
+
+  margin: 0 0.25rem;
+  font-size: 0.85rem;
+  letter-spacing: 2px;
+  transition: $transition;
+  font-weight: 300;
+
+  :hover {
+    color: $primary-color;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .login-btn {
+    font-size: 1.5rem;
+    margin: 0 0.5rem;
+  }
 }

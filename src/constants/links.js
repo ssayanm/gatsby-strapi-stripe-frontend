@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "gatsby";
 import { MdHome, MdKeyboardArrowDown } from "react-icons/md";
 import CartLink from "../components/cart/CartLink";
+import LoginLink from "../components/LoginLink";
 
 const data = [
   {
@@ -88,6 +89,7 @@ const links = ({ styleClass }) => {
   return (
     <ul className={`page-links ${styleClass ? styleClass : ""}`}>
       {tempLinks}
+      <LoginLink />
       <CartLink />
     </ul>
   );

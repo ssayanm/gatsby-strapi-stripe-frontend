@@ -8,20 +8,26 @@ const LoginLink = () => {
   const { clearCart } = useContext(CartContext);
   if (user.token) {
     return (
-      <section
-        className="login-btn"
+      <div
+        // className="login-btn"
         // className="btn-login"
         onClick={() => {
           userLogout();
           clearCart();
         }}
+        onKeyDown={() => {
+          userLogout();
+          clearCart();
+        }}
+        role="button"
+        tabIndex="0"
       >
         logout
-      </section>
+      </div>
     );
   }
   return (
-    <Link to="/login" className="btn-login">
+    <Link to="/login" className="login-btn">
       Login
     </Link>
   );

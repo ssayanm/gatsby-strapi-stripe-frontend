@@ -9,7 +9,7 @@ const LoginLink = () => {
   if (user.token) {
     return (
       <div
-        // className="login-btn"
+        className="login-btn"
         // className="btn-login"
         onClick={() => {
           userLogout();

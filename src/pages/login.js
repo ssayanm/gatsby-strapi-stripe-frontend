@@ -37,7 +37,9 @@ const Login = () => {
       } = response.data;
       const newUser = { token, username };
       userLogin(newUser);
-      showAlert({ msg: `you are logged in: ${username}. shop away my friend` });
+      showAlert({
+        msg: `${username}, you are now logged in!! Shop away my friend`,
+      });
       navigate("/shop");
     } else {
       showAlert({
@@ -89,7 +91,7 @@ const Login = () => {
         {!isEmpty && (
           <button
             type="submit"
-            className="btn btn-primary btn-block"
+            className="btn-primary  center-btn"
             onClick={handleSubmit}
           >
             submit

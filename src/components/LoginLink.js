@@ -10,7 +10,6 @@ const LoginLink = () => {
     return (
       <div
         className="login-btn"
-        // className="btn-login"
         onClick={() => {
           userLogout();
           clearCart();

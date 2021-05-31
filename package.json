@@ -19,7 +19,6 @@
     "@stripe/stripe-js": "^1.15.0",
     "gatsby": "^3.4.0",
     "gatsby-awesome-pagination": "^0.3.8",
-    "gatsby-plugin-create-client-paths": "^3.6.0",
     "gatsby-plugin-google-analytics": "^3.4.0",
     "gatsby-plugin-image": "^1.4.0",
     "gatsby-plugin-manifest": "^3.4.0",

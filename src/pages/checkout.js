@@ -1,4 +1,11 @@
 import React, { useContext, useState } from "react";
+
+// import getStripe from "../utils/stripejs";
+
+import { CardElement, Elements } from "@stripe/react-stripe-js";
+
+import { loadStripe } from "@stripe/stripe-js";
+
 import { Link, navigate } from "gatsby";
 
 import { CartContext } from "../context/cart";
@@ -8,6 +15,10 @@ import EmptyCart from "../components/cart/EmptyCart";
 import submitOrder from "../strapi/submitOrder";
 import Layout from "../components/Layout";
 import TitleBar from "../components/TitleBar";
+
+const stripePromise = loadStripe(
+  "pk_test_51FojKOAvDjyZQBUKL1W7QM1RQITcKVCy4Yl8uM1H9a77obMyqasXv7FPYJJ4Zz1NHjqijIWRZxaf1626F4UcrfkY00iTX49CqM"
+);
 
 const Checkout = (props) => {
   const { cart, total, clearCart } = useContext(CartContext);
@@ -75,7 +86,7 @@ const Checkout = (props) => {
                 }}
               />
             </div>
-
+            <CardElement className="card-element" />
             <div className="stripe-info">
               <label htmlFor="card-element">Credit or Debit Card</label>
               <p className="stripe-info">
@@ -110,4 +121,14 @@ const Checkout = (props) => {
   );
 };
 
-export default Checkout;
+// const CardForm = injectStripe(Checkout);
+
+const StripeWrapper = () => {
+  return (
+    <Elements stripe={stripePromise}>
+      <Checkout />
+    </Elements>
+  );
+};
+
+export default StripeWrapper;

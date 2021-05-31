@@ -1,7 +1,7 @@
 {
-  "name": "pleasantsmith",
+  "name": "gatsbyecommerce",
   "private": true,
-  "description": "A website for Pleasant Smith",
+  "description": "An ecommerce website using Gatsby",
   "author": "Sayan Mukherjee",
   "version": "0.1.0",
   "license": "MIT",

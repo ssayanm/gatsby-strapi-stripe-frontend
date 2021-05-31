@@ -16,13 +16,10 @@ const Blog = ({
 }) => {
   return (
     <Layout location={location}>
-      <Seo
-        title="The Pleasant Blog"
-        description="Connecticut Certified Relationship Coach Pleasant Smith"
-      />
+      <Seo title="The Sayan Blog" description="Freelance website developer" />
 
       <section className="blog-page">
-        <Blogs blogs={blogs} title="The Pleasant Blog" />
+        <Blogs blogs={blogs} title="The Sayan Blog" />
         <Pager pageContext={pageContext} />
       </section>
       <MiniContact />

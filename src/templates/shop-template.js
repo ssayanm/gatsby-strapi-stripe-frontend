@@ -9,14 +9,7 @@ import { navigate } from "gatsby";
 import { CartContext } from "../context/cart";
 
 const ShopTemplate = ({ data }) => {
-  const {
-    id,
-    description,
-    title,
-    shortdescription,
-    price,
-    image,
-  } = data.product;
+  const { description, title, shortdescription, price, image } = data.product;
 
   const { addToCart } = useContext(CartContext);
 

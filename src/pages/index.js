@@ -6,6 +6,7 @@ import Info from "../components/Info";
 import Blogs from "../components/blog/Blogs";
 import Service from "../components/Service";
 import MiniContact from "../components/MiniContact";
+
 import Seo from "../components/Seo";
 
 const index = ({ data }) => {

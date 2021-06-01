@@ -2,7 +2,13 @@ import React, { useContext, useState } from "react";
 
 // import getStripe from "../utils/stripejs";
 
-import { CardElement, Elements } from "@stripe/react-stripe-js";
+import {
+  CardElement,
+  Elements,
+  ElementsConsumer,
+  useStripe,
+  useElements,
+} from "@stripe/react-stripe-js";
 
 import { loadStripe } from "@stripe/stripe-js";
 
@@ -28,23 +34,73 @@ const Checkout = (props) => {
   const [error, setError] = useState("");
   const isEmpty = !name || alert.show;
 
-  const handleSubmit = async (e) => {
-    showAlert({ msg: "submitting order..please wait" });
-    e.preventDefault();
-    const response = await props.stripe
-      .createToken()
-      .catch((error) => console.log(error));
+  const stripe = useStripe();
+  const elements = useElements();
 
-    const { token } = response;
-    if (token) {
+  // const [token, setToken] = useState(null);
+
+  // const handleSubmit = async (e) => {
+  //   showAlert({ msg: "submitting order..please wait" });
+  //   e.preventDefault();
+
+  //   const { error, response } = await stripe.createPaymentMethod({
+  //     type: "card",
+  //     card: elements.getElement(CardElement),
+  //   });
+  //   // .createToken()
+  //   // .catch((error) => console.log(error));
+
+  //   console.log(response);
+
+  //   const { id } = response;
+  //   if (id) {
+  //     setError("");
+  //     const { id } = id;
+  //     let order = await submitOrder({
+  //       name: name,
+  //       total: total,
+  //       items: cart,
+  //       stripeTokenId: id,
+  //       userToken: user.id,
+  //     });
+
+  //     if (order) {
+  //       showAlert({ msg: "yor order is complete" });
+  //       clearCart();
+  //       navigate("/");
+  //       return;
+  //     } else {
+  //       showAlert({
+  //         msg: "there was an error with your order, please try again",
+  //         type: "danger",
+  //       });
+  //     }
+  //   } else {
+  //     hideAlert();
+  //     setError(response.error.message);
+  //   }
+  // };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const { error, paymentMethod } = await stripe.createPaymentMethod({
+      type: "card",
+      card: elements.getElement(CardElement),
+    });
+
+    // const { pa } = paymentMethod;
+    console.log(paymentMethod);
+
+    const { id } = paymentMethod;
+    if (id) {
       setError("");
-      const { id } = token;
+      // const { id } = id;
       let order = await submitOrder({
         name: name,
         total: total,
         items: cart,
         stripeTokenId: id,
-        userToken: user.token,
+        userToken: user.id,
       });
 
       if (order) {
@@ -60,7 +116,7 @@ const Checkout = (props) => {
       }
     } else {
       hideAlert();
-      setError(response.error.message);
+      setError(paymentMethod.error.message);
     }
   };
 
@@ -123,10 +179,18 @@ const Checkout = (props) => {
 
 // const CardForm = injectStripe(Checkout);
 
+// const InjectedCheckoutForm = () => {
+//   return (
+//     <ElementsConsumer>
+//       <Checkout />
+//     </ElementsConsumer>
+//   );
+// };
+
 const StripeWrapper = () => {
   return (
     <Elements stripe={stripePromise}>
-      <Checkout />
+      <Checkout stripe={stripePromise} />
     </Elements>
   );
 };

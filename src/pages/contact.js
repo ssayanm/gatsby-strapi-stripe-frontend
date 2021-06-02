@@ -59,7 +59,7 @@ const Contact = () => {
           <Fade right>
             <div className="contact-address">
               <StaticImage
-                src="../assets/ps.jpg"
+                src="../assets/himg.jpg"
                 alt="Pleasant Smith"
                 className="contact-img"
               />

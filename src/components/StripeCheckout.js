@@ -20,6 +20,8 @@ const CheckoutForm = () => {
   const { cart, total, clearCart } = useContext(CartContext);
   const { user } = useContext(UserContext);
 
+  const [token, setToken] = useState(null);
+
   // STRIPE STUFF
   const [succeeded, setSucceeded] = useState(false);
   const [error, setError] = useState(null);
@@ -29,23 +31,43 @@ const CheckoutForm = () => {
   const stripe = useStripe();
   const elements = useElements();
 
-  const createPaymentIntent = async () => {
-    try {
-      const { data } = await axios.post(
-        "/.netlify/functions/create-payment-intent",
-        JSON.stringify({ cart, total })
-      );
+  // const createPaymentIntent = async () => {
+  //   try {
+  //     const { data } = await axios.post(
+  //       `${process.env.GATSBY_API_URL}/orders`,
+  //       JSON.stringify({ cart, total, user })
+  //     );
 
-      setClientSecret(data.clientSecret);
-    } catch (error) {
-      // console.log(error.response)
-    }
-  };
+  //     setClientSecret(data.clientSecret);
+  //   } catch (error) {
+  //     console.log(error.response);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   createPaymentIntent();
+  //   // eslint-disable-next-line
+  // }, []);
 
   useEffect(() => {
-    createPaymentIntent();
-    // eslint-disable-next-line
-  }, []);
+    const loadToken = async () => {
+      const response = await fetch(`${process.env.GATSBY_API_URL}/orders`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          cart: cart,
+        }),
+      });
+
+      const data = await response.json();
+      setToken(data.client_secret);
+      // setTotal(data.amount);
+    };
+
+    loadToken();
+  }, [cart]);
 
   const handleChange = async (event) => {
     setDisabled(event.empty);
@@ -54,11 +76,13 @@ const CheckoutForm = () => {
   const handleSubmit = async (ev) => {
     ev.preventDefault();
     setProcessing(true);
+
     const payload = await stripe.confirmCardPayment(clientSecret, {
       payment_method: {
         card: elements.getElement(CardElement),
       },
     });
+    console.log(payload);
     if (payload.error) {
       setError(`Payment failed ${payload.error.message}`);
       setProcessing(false);

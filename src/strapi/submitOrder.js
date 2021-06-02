@@ -7,6 +7,7 @@ const submitOrder = async ({
   items,
   stripeTokenId,
   userToken,
+  customer,
 }) => {
   const response = await axios
     .post(
@@ -16,6 +17,7 @@ const submitOrder = async ({
         total,
         items,
         stripeTokenId,
+        customer,
       },
       {
         headers: {

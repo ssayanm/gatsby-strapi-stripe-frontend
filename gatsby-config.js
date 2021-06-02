@@ -35,7 +35,7 @@ module.exports = {
       resolve: `gatsby-plugin-manifest`,
       options: {
         // ...
-        icon: `src/assets/ps.jpg`,
+        icon: `src/assets/himg.jpg`,
         icon_options: {
           purpose: `maskable`,
         },

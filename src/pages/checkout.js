@@ -5,9 +5,11 @@ import { Elements } from "@stripe/react-stripe-js";
 import Layout from "../components/Layout";
 import Seo from "../components/Seo";
 import TitleBar from "../components/TitleBar";
-import StripeCheckout from "../components/CheckoutForm";
+import CheckoutForm from "../components/CheckoutForm";
+
 import { CartContext } from "../context/cart";
 import EmptyCart from "../components/cart/EmptyCart";
+import StripeCheckout from "../components/StripeCheckout";
 
 const Checkout = () => {
   const { cart } = useContext(CartContext);

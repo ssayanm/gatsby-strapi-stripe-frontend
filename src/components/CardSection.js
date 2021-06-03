@@ -5,6 +5,7 @@ import React from "react";
 import { CardElement } from "@stripe/react-stripe-js";
 
 function CardSection(props) {
+  console.log("props", props);
   return (
     <div>
       <div>
@@ -34,16 +35,6 @@ function CardSection(props) {
           </fieldset>
         </div>
       </div>
-      <style jsx>
-        {`
-          .order-button-wrapper {
-            display: flex;
-            width: 100%;
-            align-items: flex-end;
-            justify-content: flex-end;
-          }
-        `}
-      </style>
     </div>
   );
 }

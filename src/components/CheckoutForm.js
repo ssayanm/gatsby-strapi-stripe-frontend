@@ -1,18 +1,19 @@
-import React, { useState, useEffect, useContext } from "react";
-import styled from "styled-components";
-import { loadStripe } from "@stripe/stripe-js";
+import React, { useState, useContext } from "react";
+// import styled from "styled-components";
+// import { loadStripe } from "@stripe/stripe-js";
 import CardSection from "./CardSection";
 
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 
-import axios from "axios";
+// import axios from "axios";
 
 import Cookies from "js-cookie";
 
 import { CartContext } from "../context/cart";
 import { UserContext } from "../context/user";
 
-import { navigate } from "gatsby-link";
+// import { navigate } from "gatsby-link";
+import fetch from "isomorphic-fetch";
 
 const CheckoutForm = () => {
   const { cart, total, clearCart } = useContext(CartContext);
@@ -21,11 +22,11 @@ const CheckoutForm = () => {
   // const [token, setToken] = useState(null);
 
   // STRIPE STUFF
-  const [succeeded, setSucceeded] = useState(false);
-  const [error, setError] = useState(null);
-  const [processing, setProcessing] = useState("");
-  const [disabled, setDisabled] = useState(true);
-  const [clientSecret, setClientSecret] = useState("");
+  // const [succeeded, setSucceeded] = useState(false);
+
+  // const [processing, setProcessing] = useState("");
+  // const [disabled, setDisabled] = useState(true);
+  // const [clientSecret, setClientSecret] = useState("");
 
   const [data, setData] = useState({
     address: "",
@@ -34,8 +35,11 @@ const CheckoutForm = () => {
     stripe_id: "",
   });
 
+  const [error, setError] = useState(null);
   const stripe = useStripe();
   const elements = useElements();
+
+  // console.log("API url", process.env.GATSBY_API_URL);
 
   function onChange(e) {
     // set the key = to the name property equal to the value typed
@@ -43,52 +47,6 @@ const CheckoutForm = () => {
     // update the state data object
     setData({ ...data, updateItem });
   }
-
-  // const createPaymentIntent = async () => {
-  //   try {
-  //     const { data } = await axios.post(
-  //       `${process.env.GATSBY_API_URL}/orders`,
-  //       JSON.stringify({ cart, total, user })
-  //     );
-
-  //     setClientSecret(data.clientSecret);
-  //   } catch (error) {
-  //     console.log(error.response);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   createPaymentIntent();
-  //   // eslint-disable-next-line
-  // }, []);
-
-  // const handleChange = async (event) => {
-  //   setDisabled(event.empty);
-  //   setError(event.error ? event.error.message : "");
-  // };
-  // const handleSubmit = async (ev) => {
-  //   ev.preventDefault();
-  //   setProcessing(true);
-
-  //   const payload = await stripe.confirmCardPayment(clientSecret, {
-  //     payment_method: {
-  //       card: elements.getElement(CardElement),
-  //     },
-  //   });
-  //   console.log(payload);
-  //   if (payload.error) {
-  //     setError(`Payment failed ${payload.error.message}`);
-  //     setProcessing(false);
-  //   } else {
-  //     setError(null);
-  //     setProcessing(false);
-  //     setSucceeded(true);
-  //     setTimeout(() => {
-  //       clearCart();
-  //       navigate("/");
-  //     }, 10000);
-  //   }
-  // };
 
   async function submitOrder() {
     // event.preventDefault();
@@ -100,14 +58,15 @@ const CheckoutForm = () => {
     // // e.g. createToken - https://stripe.com/docs/js/tokens_sources/create_token?type=cardElement
     // get token back from stripe to process credit card
     const token = await stripe.createToken(cardElement);
-    console.log(token);
+
     const userToken = Cookies.get("token");
+
     const response = await fetch(`${process.env.GATSBY_API_URL}/orders`, {
       method: "POST",
-      // headers: userToken && { Authorization: `Bearer ${userToken}` },
+      headers: userToken,
       body: JSON.stringify({
         total: total,
-        // dishes: appContext.cart.items,
+        items: cart.items,
         address: data.address,
         city: data.city,
         state: data.state,
@@ -116,8 +75,11 @@ const CheckoutForm = () => {
     });
 
     if (!response.ok) {
+      console.log(error);
       setError(response.statusText);
     }
+
+    console.log("response", response);
   }
 
   return (

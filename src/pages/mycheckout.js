@@ -1,25 +1,141 @@
-// import React from "react";
-// import { loadStripe } from "@stripe/stripe-js";
-// import { Elements } from "@stripe/react-stripe-js";
-// import CheckoutForm from "../components/CheckoutForm";
-// import Layout from "../components/Layout";
-// import TitleBar from "../components/TitleBar";
+import React, { useContext, useState } from "react";
+import { CartContext } from "../context/cart";
+import { UserContext } from "../context/user";
 
-// // Make sure to call loadStripe outside of a component’s render to avoid
-// // recreating the Stripe object on every render.
-// // loadStripe is initialized with a fake API key.
-// // Sign in to see examples pre-filled with your key.
-// const promise = loadStripe(process.env.GATSBY_STRIPE_PUBLISHABLE_KEY);
+import EmptyCart from "../components/cart/EmptyCart";
+import { loadStripe } from "@stripe/stripe-js";
 
-// const mycheckout = () => {
-//   return (
-//     <Layout>
-//       <TitleBar title="checkout" desc=" " />
-//       <Elements stripe={promise}>
-//         <CheckoutForm />
-//       </Elements>
-//     </Layout>
-//   );
-// };
+import {
+  CardElement,
+  Elements,
+  injectStripe,
+  useStripe,
+  useElements,
+} from "@stripe/react-stripe-js";
 
-// export default mycheckout;
+import submitOrder from "../strapi/submitOrder";
+import { navigate } from "gatsby-link";
+
+const stripePromise = loadStripe(process.env.GATSBY_STRIPE_PUBLISHABLE_KEY);
+
+const Checkout = (props) => {
+  const { cart, total, clearCart } = useContext(CartContext);
+  const { user, alert, showAlert, hideAlert } = useContext(UserContext);
+
+  const [name, setName] = useState("");
+  const [error, setError] = useState("");
+  const isEmpty = !name || alert.show;
+
+  const stripe = useStripe();
+  const elements = useElements();
+
+  console.log(props);
+  const handleSubmit = async (e) => {
+    showAlert({ msg: "submitting order..please wait" });
+    e.preventDefault();
+
+    const cardElement = elements.getElement(CardElement);
+    const token = await stripe.createToken(cardElement);
+
+    const response = await fetch(`${process.env.GATSBY_API_URL}/orders`, {
+      method: "POST",
+      //   headers: userToken,
+      body: JSON.stringify({
+        total: total,
+        items: cart.items,
+      }),
+    }).catch((error) => console.log(error));
+    console.log(response);
+    // const { token } = response;
+
+    if (token) {
+      setError("");
+      const { id } = token;
+      let order = await submitOrder({
+        name: name,
+        total: total,
+        items: cart,
+        stripeTokenId: id,
+        userToken: user.token,
+      });
+
+      if (order) {
+        showAlert({ msg: "yor order is complete" });
+        clearCart();
+        navigate("/");
+        return;
+      } else {
+        showAlert({
+          msg: "there was an error with your order, please try again",
+          type: "danger",
+        });
+      }
+    } else {
+      hideAlert();
+      setError(response.error.message);
+    }
+  };
+
+  if (cart.length < 1) return <EmptyCart />;
+  return (
+    <section className="section form">
+      <h2 className="section-title">checkout</h2>
+
+      <form className="checkout-form">
+        <h3>
+          order total: <span>₹{total}</span>
+        </h3>
+
+        <div className="form-control">
+          <label htmlFor="name">name</label>
+          <input
+            type="text"
+            id="name"
+            value={name}
+            onChange={(e) => {
+              setName(e.target.value);
+            }}
+          />
+        </div>
+
+        <CardElement className="card-element" />
+
+        <div className="stripe-info">
+          <label htmlFor="card-element">Credit or Debit Card</label>
+          <p className="stripe-info">
+            Test using credit card: <span>4242 42424 4242 4242</span>
+            <br />
+            enter any 5 digits for zip code
+            <br />
+            enter any 3 digits for cvc
+          </p>
+        </div>
+
+        {error && <p className="form-empty">{error}</p>}
+        {isEmpty ? (
+          <p className="form-empty">please fill out name field</p>
+        ) : (
+          <button
+            type="submit"
+            onClick={handleSubmit}
+            className="btn btn-primary btn-block"
+          >
+            submit
+          </button>
+        )}
+      </form>
+    </section>
+  );
+};
+
+// const CardForm = injectStripe(Checkout);
+
+const StripeWrapper = () => {
+  return (
+    <Elements stripe={stripePromise}>
+      <Checkout />
+    </Elements>
+  );
+};
+
+export default StripeWrapper;

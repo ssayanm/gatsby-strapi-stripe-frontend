@@ -7,6 +7,7 @@ import {
   Elements,
   useElements,
 } from "@stripe/react-stripe-js";
+
 import axios from "axios";
 
 import { CartContext } from "../context/cart";

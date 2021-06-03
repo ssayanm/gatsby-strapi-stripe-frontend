@@ -20,7 +20,7 @@ const CheckoutForm = () => {
   const { cart, total, clearCart } = useContext(CartContext);
   const { user } = useContext(UserContext);
 
-  const [token, setToken] = useState(null);
+  // const [token, setToken] = useState(null);
 
   // STRIPE STUFF
   const [succeeded, setSucceeded] = useState(false);
@@ -31,43 +31,23 @@ const CheckoutForm = () => {
   const stripe = useStripe();
   const elements = useElements();
 
-  // const createPaymentIntent = async () => {
-  //   try {
-  //     const { data } = await axios.post(
-  //       `${process.env.GATSBY_API_URL}/orders`,
-  //       JSON.stringify({ cart, total, user })
-  //     );
+  const createPaymentIntent = async () => {
+    try {
+      const { data } = await axios.post(
+        `${process.env.GATSBY_API_URL}/orders`,
+        JSON.stringify({ cart, total, user })
+      );
 
-  //     setClientSecret(data.clientSecret);
-  //   } catch (error) {
-  //     console.log(error.response);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   createPaymentIntent();
-  //   // eslint-disable-next-line
-  // }, []);
+      setClientSecret(data.clientSecret);
+    } catch (error) {
+      console.log(error.response);
+    }
+  };
 
   useEffect(() => {
-    const loadToken = async () => {
-      const response = await fetch(`${process.env.GATSBY_API_URL}/orders`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          cart: cart,
-        }),
-      });
-
-      const data = await response.json();
-      setToken(data.client_secret);
-      // setTotal(data.amount);
-    };
-
-    loadToken();
-  }, [cart]);
+    createPaymentIntent();
+    // eslint-disable-next-line
+  }, []);
 
   const handleChange = async (event) => {
     setDisabled(event.empty);

@@ -1,119 +1,134 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import styled from "styled-components";
 import { loadStripe } from "@stripe/stripe-js";
+
 import {
   CardElement,
-  useStripe,
   Elements,
+  useStripe,
   useElements,
 } from "@stripe/react-stripe-js";
 
 import axios from "axios";
-
+import submitOrder from "../strapi/submitOrder";
+import EmptyCart from "../components/cart/EmptyCart";
 import { CartContext } from "../context/cart";
 import { UserContext } from "../context/user";
 
 import { navigate } from "gatsby-link";
 
-const promise = loadStripe(process.env.GATSBY_STRIPE_PUBLISHABLE_KEY);
+const stripePromise = loadStripe(process.env.GATSBY_STRIPE_PUBLISHABLE_KEY);
 
-const CheckoutForm = () => {
+const Checkout = (props) => {
   const { cart, total, clearCart } = useContext(CartContext);
-  const { user } = useContext(UserContext);
+  const { user, alert, showAlert, hideAlert } = useContext(UserContext);
 
-  // const [token, setToken] = useState(null);
+  const [name, setName] = useState("");
+  const [error, setError] = useState("");
+  const isEmpty = !name || alert.show;
 
-  // STRIPE STUFF
-  const [succeeded, setSucceeded] = useState(false);
-  const [error, setError] = useState(null);
-  const [processing, setProcessing] = useState("");
-  const [disabled, setDisabled] = useState(true);
-  const [clientSecret, setClientSecret] = useState("");
   const stripe = useStripe();
   const elements = useElements();
 
-  const createPaymentIntent = async () => {
-    try {
-      const { data } = await axios.post(
-        `${process.env.GATSBY_API_URL}/orders`,
-        JSON.stringify({ cart, total, user })
-      );
+  const handleSubmit = async (e) => {
+    showAlert({ msg: "submitting order..please wait" });
+    e.preventDefault();
 
-      setClientSecret(data.clientSecret);
-    } catch (error) {
-      console.log(error.response);
-    }
-  };
+    const cardElement = elements.getElement(CardElement);
+    const token = await stripe.createToken(cardElement);
 
-  useEffect(() => {
-    createPaymentIntent();
-    // eslint-disable-next-line
-  }, []);
+    const response = await fetch(`${process.env.GATSBY_API_URL}/orders`, {
+      method: "POST",
+      //   headers: userToken,
+      body: JSON.stringify({
+        total: total,
+        items: cart.items,
+      }),
+    }).catch((error) => console.log(error));
 
-  const handleChange = async (event) => {
-    setDisabled(event.empty);
-    setError(event.error ? event.error.message : "");
-  };
-  const handleSubmit = async (ev) => {
-    ev.preventDefault();
-    setProcessing(true);
+    // const { token } = response;
 
-    const payload = await stripe.confirmCardPayment(clientSecret, {
-      payment_method: {
-        card: elements.getElement(CardElement),
-      },
-    });
-    console.log(payload);
-    if (payload.error) {
-      setError(`Payment failed ${payload.error.message}`);
-      setProcessing(false);
-    } else {
-      setError(null);
-      setProcessing(false);
-      setSucceeded(true);
-      setTimeout(() => {
+    if (token) {
+      setError("");
+
+      console.log("token", token);
+      console.log("userToken", token.token.id);
+      let order = await submitOrder({
+        name: name,
+        customer: name,
+        total: total,
+        items: cart,
+        source: token.token.id,
+        stripeTokenId: token.token.id,
+        userToken: user.token,
+      });
+
+      console.log("order", order);
+
+      if (order) {
+        showAlert({ msg: "yor order is complete" });
         clearCart();
         navigate("/");
-      }, 10000);
+        return;
+      } else {
+        showAlert({
+          msg: "there was an error with your order, please try again",
+          type: "danger",
+        });
+      }
+    } else {
+      hideAlert();
+      setError(response.error.message);
     }
   };
 
+  if (cart.length < 1) return <EmptyCart />;
   return (
     <section className="section form">
-      {succeeded ? (
-        <article>
-          <h4>Thank you</h4>
-          <h4>Your payment was successful!</h4>
-          <h4>Redirecting to home page shortly</h4>
-        </article>
-      ) : (
-        <article>
-          <h4>Hello, {user && user.name}</h4>
-          <p>Your total is ${total}</p>
-          <p>Test Card Number : 4242 4242 4242 4242</p>
-        </article>
-      )}
-      <form id="payment-form" onSubmit={handleSubmit} className="checkout-form">
-        <CardElement id="card-element" onChange={handleChange} />
-        <button disabled={processing || disabled || succeeded} id="submit">
-          <span id="button-text">
-            {processing ? <div className="spinner" id="spinnier"></div> : "Pay"}
-          </span>
-        </button>
-        {/* Show any error that happens when processing the payment */}
-        {error && (
-          <div className="card-error" role="alert">
-            {error}
-          </div>
+      <h2 className="section-title">checkout</h2>
+
+      <form className="checkout-form">
+        <h3>
+          order total: <span>₹{total}</span>
+        </h3>
+
+        <div className="form-control">
+          <label htmlFor="name">name</label>
+          <input
+            type="text"
+            id="name"
+            value={name}
+            onChange={(e) => {
+              setName(e.target.value);
+            }}
+          />
+        </div>
+
+        <CardElement className="card-element" />
+
+        <div className="stripe-info">
+          <label htmlFor="card-element">Credit or Debit Card</label>
+          <p className="stripe-info">
+            Test using credit card: <span>4242 42424 4242 4242</span>
+            <br />
+            enter any 5 digits for zip code
+            <br />
+            enter any 3 digits for cvc
+          </p>
+        </div>
+
+        {error && <p className="form-empty">{error}</p>}
+        {isEmpty ? (
+          <p className="form-empty">please fill out name field</p>
+        ) : (
+          <button
+            type="submit"
+            onClick={handleSubmit}
+            className="btn btn-primary btn-block"
+          >
+            submit
+          </button>
         )}
-        {/* Show  a success message upon completion */}
-        <p className={succeeded ? "result-message" : "result-message hidden"}>
-          Payment succedded, see the result in your
-          <a href={`https://dashboard.stripe.com/test/payments`}>
-            Stripe dasboard.
-          </a>
-          Refresh the page to pay again
-        </p>
       </form>
     </section>
   );
@@ -122,8 +137,8 @@ const CheckoutForm = () => {
 const StripeCheckout = () => {
   return (
     <Wrapper>
-      <Elements stripe={promise}>
-        <CheckoutForm />
+      <Elements stripe={stripePromise}>
+        <Checkout />
       </Elements>
     </Wrapper>
   );

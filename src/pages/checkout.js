@@ -5,7 +5,6 @@ import { Elements } from "@stripe/react-stripe-js";
 import Layout from "../components/Layout";
 import Seo from "../components/Seo";
 import TitleBar from "../components/TitleBar";
-import CheckoutForm from "../components/CheckoutForm";
 
 import { CartContext } from "../context/cart";
 import EmptyCart from "../components/cart/EmptyCart";

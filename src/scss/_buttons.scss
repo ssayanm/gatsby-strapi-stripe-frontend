@@ -51,6 +51,16 @@
   padding: 0.5rem 0.75rem;
 }
 
+.btn-checkout {
+  @extend %btn;
+  width: 100%;
+  &:hover {
+    transform: scale(0.98);
+    background: $dark-red;
+    color: $white;
+  }
+}
+
 .btn-login {
   @extend %btn;
   // background: transparent;

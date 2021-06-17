@@ -5,7 +5,7 @@ import { StaticImage } from "gatsby-plugin-image";
 
 const CartLink = () => {
   const { cartItems } = useContext(CartContext);
-  // console.log(cartItems);
+
   return (
     <Link to="/cart">
       <div className="cart-container">
